@@ -9,6 +9,20 @@ server.use(express.json())
 
 const courses = ['Node JS', 'JavaScript', 'React'];
 
+//Middleware Global
+    server.use((req, res, next) => {
+        console.log('URL: ${req.url}');
+
+            return next();
+    });
+
+function checkCourses(req, res, next){
+    if(!req.body.name){
+        return res.status(400).json({ error: "Sorry! Course name is required."})
+    }
+
+    return next();
+}
 
     // Funciton for search by id
     server.get('/projetos/:index', (req, res) => {
@@ -26,7 +40,7 @@ const courses = ['Node JS', 'JavaScript', 'React'];
 
     
     // Funtion for create infomation
-    server.post('/projetos', (req, res) => {
+    server.post('/projetos', checkCourses, (req, res) => {
     const { name } = req.body;
     courses.push(name);
 
@@ -35,7 +49,7 @@ const courses = ['Node JS', 'JavaScript', 'React'];
 
 
     // Funtion for edit information by id
-    server.put('/projetos/:index', (req, res) => {
+    server.put('/projetos/:index', checkCourses, (req, res) => {
     const { index } = req.params;
     const { name } = req.body;
 
