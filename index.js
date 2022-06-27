@@ -1,46 +1,59 @@
-// CRUD EM NODE JS
+// CRUD IN NODE JS -> Create, Read, Update, Delete
 
 const express = require('express');
-
 const server = express();
+
 
 server.use(express.json())
 
-const cursos = ['Node JS', 'JavaScript', 'React'];
 
-server.get('/projetos/:index', (req, res) => {
+const courses = ['Node JS', 'JavaScript', 'React'];
+
+
+    // Funciton for search by id
+    server.get('/projetos/:index', (req, res) => {
     const { index } = req.params;
+
+        return res.json( courses[index]);
+    });
+
     
-    return res.json( cursos[index]);
-});
+    // Function for list all data
+    server.get('/projetos', (req, res) => {
+        
+        return res.json(courses);
+    });
 
-server.get('/projetos', (req, res) => {
-    return res.json(cursos);
-});
-
-server.post('/projetos', (req, res) => {
-    const { name } = req.body;
-    cursos.push(name);
-
-    return res.json({message: "Curso criado com sucesso!"});
-});
-
-server.put('/projetos/:index', (req, res) => {
-    const { index } = req.params;
-    const { name } = req.body;
     
-    cursos[ index ] = (name);
+    // Funtion for create infomation
+    server.post('/projetos', (req, res) => {
+    const { name } = req.body;
+    courses.push(name);
 
-    return res.json({message: "Curso editado com sucesso!"});
-});
+        return res.json({message: "Course successfully created!"});
+    });
 
-server.delete('/projetos/:index', (req, res) => {
+
+    // Funtion for edit information by id
+    server.put('/projetos/:index', (req, res) => {
+    const { index } = req.params;
+    const { name } = req.body;
+
+    courses[ index ] = (name);
+
+        return res.json({message: "Course successfully edited!"});
+    });
+
+
+    // Function for delete information by id
+    server.delete('/projetos/:index', (req, res) => {
     const { index } = req.params;
 
-    cursos.splice(index, 1);
+    courses.splice(index, 1);
 
-    return res.json({message: "Curso deletado com sucesso!"});
-})
+        return res.json({message: "Course successfully deleted!"});
+    })
+
 
 
 server.listen(3000);
