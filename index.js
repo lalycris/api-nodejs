@@ -28,7 +28,7 @@ function checkIndexCourses(req, res, next){
     const course = courses[req.params.index]; 
     
     if(!course){
-        return res.status(400).json({ error: "Sorry! User doesn't exist."})
+        return res.status(400).json({ error: "Sorry! Course doesn't exist."});
     }
 
     return next();
@@ -36,9 +36,9 @@ function checkIndexCourses(req, res, next){
 
     // Funciton for search by id
     server.get('/projects/:index', checkIndexCourses, (req, res) => {
-    const { index } = req.params;
+        const { index } = req.params;
 
-        return res.json( courses[index]);
+        return res.json(courses[index]);
     });
 
     
